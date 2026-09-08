@@ -7,55 +7,44 @@ string rtrim(const string&);
 vector<string> split(const string&);
 
 /*
- * Complete the 'hourglassSum' function below.
+ * Complete the 'simpleArraySum' function below.
  *
  * The function is expected to return an INTEGER.
- * The function accepts 2D_INTEGER_ARRAY arr as parameter.
+ * The function accepts INTEGER_ARRAY ar as parameter.
  */
 
-int hourglassSum(vector<vector<int>> arr) {
-    vector<int>a;
+int simpleArraySum(vector<int> ar) {
     int sum = 0;
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < ar.size(); i++)
     {
-        for (int j = 0; j < 4; j++)
-        {
-            sum += arr[i][j] + arr[i][j + 1] + arr[i][j + 2] + arr[i + 1][j + 1] + arr[i + 2][j] + arr[i + 2][j + 1] + arr[i + 2][j + 2];
-            a.push_back(sum);
-            sum = 0;
-        }
+        sum += ar[i];
     }
-    int max = a[0];
-    for (int i = 0; i < a.size(); i++)
-    {
-        if (a[i] > max)
-            max = a[i];
-    }
-    return max;
+    return sum;
 }
 
 int main()
 {
     ofstream fout(getenv("OUTPUT_PATH"));
 
-    vector<vector<int>> arr(6);
+    string ar_count_temp;
+    getline(cin, ar_count_temp);
 
-    for (int i = 0; i < 6; i++) {
-        arr[i].resize(6);
+    int ar_count = stoi(ltrim(rtrim(ar_count_temp)));
 
-        string arr_row_temp_temp;
-        getline(cin, arr_row_temp_temp);
+    string ar_temp_temp;
+    getline(cin, ar_temp_temp);
 
-        vector<string> arr_row_temp = split(rtrim(arr_row_temp_temp));
+    vector<string> ar_temp = split(rtrim(ar_temp_temp));
 
-        for (int j = 0; j < 6; j++) {
-            int arr_row_item = stoi(arr_row_temp[j]);
+    vector<int> ar(ar_count);
 
-            arr[i][j] = arr_row_item;
-        }
+    for (int i = 0; i < ar_count; i++) {
+        int ar_item = stoi(ar_temp[i]);
+
+        ar[i] = ar_item;
     }
 
-    int result = hourglassSum(arr);
+    int result = simpleArraySum(ar);
 
     fout << result << "\n";
 
