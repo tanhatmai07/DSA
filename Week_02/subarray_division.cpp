@@ -7,40 +7,63 @@ string rtrim(const string&);
 vector<string> split(const string&);
 
 /*
- * Complete the 'kangaroo' function below.
+ * Complete the 'birthday' function below.
  *
- * The function is expected to return a STRING.
+ * The function is expected to return an INTEGER.
  * The function accepts following parameters:
- *  1. INTEGER x1
- *  2. INTEGER v1
- *  3. INTEGER x2
- *  4. INTEGER v2
+ *  1. INTEGER_ARRAY s
+ *  2. INTEGER d
+ *  3. INTEGER m
  */
 
-string kangaroo(int x1, int v1, int x2, int v2) {
-    if (v1 <= v2) return "NO";
-    if ((x2 - x1) % (v1 - v2) != 0) return "NO";
-    return "YES";
+int birthday(vector<int> s, int d, int m) {
+    int count = 0;
+    int sumw = 0;
+    for (int i = 0; i < m; i++)
+    {
+        sumw += s[i];
+    }
+    if (sumw == d) count++;
+    for (int i = m; i < s.size(); i++)
+    {
+        sumw = sumw + s[i] - s[i - m];
+        if (sumw == d) count++;
+    }
+    return count;
 }
 
 int main()
 {
     ofstream fout(getenv("OUTPUT_PATH"));
 
+    string n_temp;
+    getline(cin, n_temp);
+
+    int n = stoi(ltrim(rtrim(n_temp)));
+
+    string s_temp_temp;
+    getline(cin, s_temp_temp);
+
+    vector<string> s_temp = split(rtrim(s_temp_temp));
+
+    vector<int> s(n);
+
+    for (int i = 0; i < n; i++) {
+        int s_item = stoi(s_temp[i]);
+
+        s[i] = s_item;
+    }
+
     string first_multiple_input_temp;
     getline(cin, first_multiple_input_temp);
 
     vector<string> first_multiple_input = split(rtrim(first_multiple_input_temp));
 
-    int x1 = stoi(first_multiple_input[0]);
+    int d = stoi(first_multiple_input[0]);
 
-    int v1 = stoi(first_multiple_input[1]);
+    int m = stoi(first_multiple_input[1]);
 
-    int x2 = stoi(first_multiple_input[2]);
-
-    int v2 = stoi(first_multiple_input[3]);
-
-    string result = kangaroo(x1, v1, x2, v2);
+    int result = birthday(s, d, m);
 
     fout << result << "\n";
 
@@ -64,7 +87,7 @@ string rtrim(const string& str) {
     string s(str);
 
     s.erase(
-        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),                                                     
+        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
         s.end()
     );
 
@@ -87,4 +110,3 @@ vector<string> split(const string& str) {
 
     return tokens;
 }
-                               
