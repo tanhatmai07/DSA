@@ -18,17 +18,13 @@ vector<string> split(const string&);
 
 int divisibleSumPairs(int n, int k, vector<int> ar) {
     int count = 0;
-    for (int i = 0; i < n - 1; i++)
+    vector<int>b(k, 0);
+    for (int i = 0; i < n; i++)
     {
-        for (int j = i + 1; j < n; j++)
-        {
-            int sum = ar[i] + ar[j];
-            if (sum % k == 0)
-            {
-                count++;
-            }
-            sum = 0;
-        }
+        int so_du = ar[i] % k;
+        int so_con_lai = (k - so_du) % k;
+        count += b[so_con_lai];
+        b[so_du]++;
     }
     return count;
 }
